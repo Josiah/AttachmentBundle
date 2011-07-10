@@ -19,9 +19,11 @@ How to get it
 =============
 
 Grab the git repo as a submodule:
+
     git submodule add git://github.com/web-dev/AttachmentBundle.git vendor/bundles/WebDev/AttachmentBundle
 
 Make sure you also get the Conventional library for the path transformations:
+
     git submodule add git://github.com/web-dev/Conventional.git vendor/webdev-conventional/WebDev/Conventional
 
 Example
