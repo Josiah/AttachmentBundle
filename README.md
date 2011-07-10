@@ -9,17 +9,17 @@ The attachment bundle automates the mapping between your entities and the file s
 
 Why use it?
 ===========
+
 * Super Flexible - The attachment storage directory can take any form
-* Fast - Instead of making another database call to get to each entity, files are checked directly on the location they're stored
-* CDN Friendly - *Coming Soon* when you store your files, place them in a CDN for fast access by clients
+* Fast - Instead of making another database call to get to each entity, files are accessed directly
+  from the location they're stored
+* CDN Friendly - *Coming Soon* when you store your files, place them in a CDN for fast access
 * Secure - Everything is below the web-root and files are stored as umask `0700` to restrict access
 
 Example
 =======
 
-::
     # AcmeBundle/Entity/File.php
-
     <?php namespace AcmeBundle\Entity;
 
     // Annotations
