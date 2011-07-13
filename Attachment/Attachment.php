@@ -1,6 +1,6 @@
 <?php namespace WebDev\AttachmentBundle\Attachment;
 
-use WebDev\AttachmentBundle\Configuration\FileAttachment;
+use WebDev\AttachmentBundle\Configuration\Attachment as AttachmentAnnotation;
 use WebDev\Conventional\StringTransformer;
 
 /**
@@ -8,9 +8,11 @@ use WebDev\Conventional\StringTransformer;
  *
  * @author Josiah <josiah@web-dev.com.au>
  */
-class File
+class Attachment
 {
-    public function __construct(FileAttachment $config, $object, AttachmentManager $manager)
+    public function __construct(
+        AttachmentManager $manager, $object,
+        AttachmentAnnotation $config)
     {
         $this->config = $config;
         $this->object = $object;
@@ -47,7 +49,7 @@ class File
      *
      * @return string pattern
      */
-    protected function guessPattern()
+    protected function guessPath()
     {
         $class = new ReflectionClass($this->object);
 
@@ -70,7 +72,7 @@ class File
      */
     public function path()
     {
-        $pattern = $this->config->getPattern() ?: $this->guessPattern();
+        $pattern = $this->config->getPath() ?: $this->guessPath();
         $transform = new StringTransformer($pattern,$this->object);
         $transform->setThrowExceptions(true);
 

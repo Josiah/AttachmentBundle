@@ -3,7 +3,7 @@
 use Exception;
 
 /**
- * File Attachment Annotation
+ * Attachment Annotation
  *
  * Defines an the file attachments that can be made to an object
  *
@@ -11,20 +11,16 @@ use Exception;
  * @package WebDev Attachment Bundle
  * @Annotation
  */
-class FileAttachment
+class Attachment
 {
     public function __construct( array $attributes )
     {
         extract($attributes);
         
-        if(isset($value)) $name = $value;
-        if(isset($name)) $this->name = $name;
-        if(isset($pattern)) $this->pattern = $pattern;
+        if(isset($value)) $path = $value;
+        if(isset($path)) $this->path = $path;
     }
     
-    protected $name;
-    public function getName() { return $this->name; }
-    
-    protected $pattern;
-    public function getPattern() { return $this->pattern; }
+    protected $path;
+    public function getPath() { return $this->path; }
 }

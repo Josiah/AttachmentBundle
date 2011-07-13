@@ -6,10 +6,17 @@
     <services>
         <service id="attachment.attachment_manager"
             class="WebDev\AttachmentBundle\Attachment\AttachmentManager">
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postLoad" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
             <argument type="service" id="annotation_reader" />
             <call method="setBasePath">
                 <argument>%kernel.root_dir%/..</argument>
             </call>
+        </service>
+        <service id="attachment.twig.extension"
+            class="WebDev\AttachmentBundle\Twig\Extension\AttachmentTwigExtension">
+            <tag name="twig.extension" />
         </service>
     </services>
 </container>
