@@ -31,7 +31,10 @@ class AttachmentTwigExtension
         }
         $cwd = getcwd();
 
-        if(!$path || $path == $cwd) return "";
+        if(!$path || $path == $cwd)
+        {
+            throw new \Exception("No relationship between path `$value` ($path) and $cwd");
+        }
 
         $length = 0;
         while(($pos = strpos($path,DIRECTORY_SEPARATOR,$length)) !== false
