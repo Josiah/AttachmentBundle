@@ -2,6 +2,7 @@
 
 use WebDev\AttachmentBundle\Configuration\Attachment as AttachmentAnnotation;
 use WebDev\Conventional\StringTransformer;
+use ReflectionClass;
 
 /**
  * Attachment File for an Object
