@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use WebDev\AttachmentBundle\Configuration\Attachment as AttachmentAnnotation;
 use WebDev\Conventional\Resolver;
+use SplFileInfo;
 
 /**
  * Attachment Manager
@@ -110,18 +111,21 @@ class AttachmentManager
         foreach($class->getProperties() as $property)
         {
             $annotation = $this->reader->getPropertyAnnotation($property,self::ATTACHMENT_ANNOTATION);
-            if($annotation instanceof AttachmentAnnotation)
-            {
-                $attachment = new Attachment($this,$entity,$annotation,$entity);
-                $uploadedFile = $this->resolver->get($entity,$property->getName());
+            if(!($annotation instanceof AttachmentAnnotation)) continue;
 
-                // Process any uploaded files
-                if($uploadedFile instanceof UploadedFile)
+            $attachment = new Attachment($this,$entity,$annotation,$entity);
+            $file = $this->resolver->get($entity,$property->getName());
+
+            // Determine if the file's location has changed
+            if($file instanceof SplFileInfo)
+            {
+                $path = $attachment->path();
+                $fullpath = realpath($path) ?: $path;
+
+                if($fullpath != $file->getRealpath())
                 {
-                    $path = $attachment->path();
-                    $uploadedFile->move(dirname($path),basename($path));
-                    $savedFile = new File($path);
-                    $this->resolver->set($entity,$property->getName(),$savedFile);
+                    $file = $file->move(dirname($fullpath),basename($fullpath));
+                    $this->resolver->set($entity,$property->getName(),$file);
                 }
             }
         }
