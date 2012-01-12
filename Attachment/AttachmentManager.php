@@ -124,7 +124,14 @@ class AttachmentManager
 
                 if($fullpath != $file->getRealpath())
                 {
-                    $file = $file->move(dirname($fullpath),basename($fullpath));
+                    if(!is_dir(dirname($path)))
+                    {
+                        mkdir(dirname($path),0777,true);
+                    }
+                    
+                    rename($file->getRealPath(),$path);
+                    $file = new SplFileInfo($path);
+                    
                     $this->resolver->set($entity,$property->getName(),$file);
                 }
             }
